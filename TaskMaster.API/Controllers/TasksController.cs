@@ -6,7 +6,7 @@ namespace TaskMaster.API.Controllers
 {
 
     [ApiController]
-    [Route("api/TaskMaster")]
+    [Route("api/Tasks")]
     public class TasksController: ControllerBase
     {
         private readonly DataContext _context;
