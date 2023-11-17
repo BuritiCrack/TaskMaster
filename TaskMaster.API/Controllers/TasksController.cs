@@ -9,47 +9,47 @@ namespace TaskMaster.API.Controllers
     [Route("api/TaskMaster")]
     public class TasksController: ControllerBase
     {
-        private readonly DataContext _Context;
+        private readonly DataContext _context;
 
         public TasksController(DataContext context)
         {
-            _Context = context;
+            _context = context;
         }
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            return Ok(await _Context.Tasks.ToListAsync());
+            return Ok(await _context.Tasks.ToListAsync());
         }
 
         //Buscar por parametro
-        [HttpGet("{Taskid:int}")]
+        [HttpGet("{TaskId:int}")]
         public async Task<ActionResult> Get(int TaskId)
         {
-            await _Context.Tasks.FirstOrDefaultAsync(x => x.TaskId == TaskId);
+            await _context.Tasks.FirstOrDefaultAsync(x => x.TaskId == TaskId);
             return Ok();
         }
 
         [HttpPost]
         public async Task<ActionResult> Post(Task task)
         {
-            _Context.Add(task);
-            await _Context.SaveChangesAsync();
+            _context.Add(task);
+            await _context.SaveChangesAsync();
             return Ok(task);
         }
 
         [HttpPut]
         public async Task<ActionResult> Put(Task task)
         {
-            _Context.Update(task);
-            await _Context.SaveChangesAsync();
+            _context.Update(task);
+            await _context.SaveChangesAsync();
             return Ok(task);
         }
 
-        [HttpDelete]
+        [HttpDelete("{TaskId:int}")]
         public async Task<ActionResult> Delete(int TaskId)
         {
-            var FilaAfectada = await _Context.Tasks
+            var FilaAfectada = await _context.Tasks
                 .Where(x => x.TaskId == TaskId)
                 .ExecuteDeleteAsync();
 
