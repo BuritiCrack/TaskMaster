@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskMaster.API.Data;
+using TaskMaster.Shared.Entities;
+
 
 namespace TaskMaster.API.Controllers
 {
@@ -26,12 +28,18 @@ namespace TaskMaster.API.Controllers
         [HttpGet("{TaskId:int}")]
         public async Task<ActionResult> Get(int TaskId)
         {
-            await _context.Tasks.FirstOrDefaultAsync(x => x.TaskId == TaskId);
-            return Ok();
+           var task = await _context.Tasks.FirstOrDefaultAsync(x => x.TaskId == TaskId);
+
+            if (task == null)
+            {
+                return NotFound("Que se fumo pa'? ese registro no existe");
+            }
+                return Ok(task);
         }
 
+        
         [HttpPost]
-        public async Task<ActionResult> Post(Task task)
+        public async Task<ActionResult> Post(TaskMaster.Shared.Entities.Task task)
         {
             _context.Add(task);
             await _context.SaveChangesAsync();
@@ -39,7 +47,7 @@ namespace TaskMaster.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(Task task)
+        public async Task<ActionResult> Put(TaskMaster.Shared.Entities.Task task)
         {
             _context.Update(task);
             await _context.SaveChangesAsync();

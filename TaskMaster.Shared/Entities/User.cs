@@ -13,12 +13,12 @@ namespace TaskMaster.Shared.Entities
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
-        public int Nombre { get; set; }
+        public string? Nombre { get; set; }
         [Required(ErrorMessage = "El campo Nombre es correoelectronico")]
         public string? CorreoElectronico { get; set; }
         [Required(ErrorMessage = "El campo Nombre es contraseña")]
         public string? Password { get; set; }
 
-        public ICollection<Task>? Tasks { get; set; }
+        public virtual ICollection<Task>? Tasks { get; set; }
     }
 }

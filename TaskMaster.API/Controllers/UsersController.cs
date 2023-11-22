@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TaskMaster.API.Data;
 using TaskMaster.Shared.Entities;
 
+
 namespace TaskMaster.API.Controllers
 {
     [ApiController]
@@ -25,27 +26,34 @@ namespace TaskMaster.API.Controllers
         [HttpGet("{UserId:int}")]
         public async Task<ActionResult> Get(int UserId)
         {
-            await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
-            return Ok();
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == UserId);
+
+            if (user == null)
+            {
+                return NotFound("No hay registros con ese ID");                                     
+            }
+
+            return Ok(user);
+
         }
 
-        /*
-        [HttpPost]
-        public async Task<ActionResult> Post(User User)
-        {
-            _context.Add(User);
-            await _context.SaveChangesAsync();
-            return Ok(User);
-        }
         
-        /*
+        [HttpPost]
+        public async Task<ActionResult> Post(User user)
+        {
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+            return Ok(user);
+        }
+
+        
         [HttpPut]
         public async Task<ActionResult> Put(User user)
         {
             _context.Update(user);
             await _context.SaveChangesAsync();
             return Ok(user);
-        }*/
+        }
 
         [HttpDelete]
         public async Task<ActionResult> Delete(int UserId)
