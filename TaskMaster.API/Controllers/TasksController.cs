@@ -68,7 +68,7 @@ namespace TaskMaster.API.Controllers
                 return NotFound();//404
             }
 
-            return NoContent();//204
+            return Ok("El usuario con el Id " + TaskId + " Fue eliminado");//200
         }
     }
 }

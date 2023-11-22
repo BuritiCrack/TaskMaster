@@ -30,7 +30,7 @@ namespace TaskMaster.API.Controllers
 
             if (user == null)
             {
-                return NotFound("No hay registros con ese ID");                                     
+                return NotFound("Que se fumo pa'? ese registro no existe");                                     
             }
 
             return Ok(user);
@@ -69,7 +69,7 @@ namespace TaskMaster.API.Controllers
                 return NotFound();//404
             }
 
-            return NoContent();//204
+            return Ok("El usuario con el Id " +UserId+" Fue eliminado");//200
         }
     }
 }
